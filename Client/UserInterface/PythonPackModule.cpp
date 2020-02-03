@@ -1,9 +1,7 @@
 /*
  Add before:
  
-#define BUFSIZE MAX_PATH
-
-void ExePath() {
+void initpack()
 
 */
 
