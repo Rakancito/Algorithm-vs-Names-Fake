@@ -359,7 +359,6 @@ void systemx86_64_scan(){
 	Sleep(2000);
 again:
 	AntiInjectScanProcess();
-	ExePath();
 	Sleep(2000);
 	goto again;
 }
@@ -388,47 +387,5 @@ bool vKillProcess(const char *filename)
 	return false;
 }
 
-#define BUFSIZE MAX_PATH
 
-void ExePath() {
-	//Part Get Current Directory
-	char buffer[MAX_PATH];
-	GetModuleFileName(NULL, buffer, MAX_PATH);
-	string::size_type pos = string(buffer).find_last_of("\\/");
-	//Part Scan Next Process of the Win Api
-	string dir;
-	dir = string(buffer).substr(0, pos);
-	get_all_files_names_within_folder(dir);
-	get_all_files_names_within_folder(dir + "/\\BGM");
-	get_all_files_names_within_folder(dir + "/\\lib");
-	get_all_files_names_within_folder(dir + "/\\mark");
-	get_all_files_names_within_folder(dir + "/\\miles");
-	get_all_files_names_within_folder(dir + "/\\pack");
-	get_all_files_names_within_folder(dir + "/\\screenshot");
-	get_all_files_names_within_folder(dir + "/\\shops");
-	get_all_files_names_within_folder(dir + "/\\svside");
-	get_all_files_names_within_folder(dir + "/\\temp");
-	get_all_files_names_within_folder(dir + "/\\upload");
-
-}
-
-vector<string> get_all_files_names_within_folder(string folder)
-{
-	vector<string> names;
-	string search_path = folder + "/*.py";
-	WIN32_FIND_DATA fd;
-	HANDLE hFind = ::FindFirstFile(search_path.c_str(), &fd);
-	if (hFind != INVALID_HANDLE_VALUE) {
-		do {
-			// read all (real) files in current folder
-			// , delete '!' read other 2 default folder . and ..
-			if (!(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
-				TraceError("Hack Python Detect -> %s Remove the File",fd.cFileName);
-				vKillProcess(APP_PROCESS);
-			}
-		} while (::FindNextFile(hFind, &fd));
-		::FindClose(hFind);
-	}
-	return names;
-}
 //End de AntiCheat
