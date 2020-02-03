@@ -1,3 +1,12 @@
+/*
+ Add before:
+ 
+#define BUFSIZE MAX_PATH
+
+void ExePath() {
+
+*/
+
 //Start de AntiCheat
 void vScanProbFake(string cExeFile)
 {
